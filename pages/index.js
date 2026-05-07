@@ -78,72 +78,125 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>CABALLEROS TROCA</title>
+        <title>Caballeros Troca</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>" />
+        <style>{`
+          * { box-sizing: border-box; }
+          body { margin: 0; background: #f4f4f5; font-family: 'Outfit', sans-serif; }
+
+          .page { min-height: 100vh; background: #f4f4f5; display: flex; flex-direction: column; }
+
+          .header { background: #fff; border-bottom: 1px solid #e4e4e7; padding: 16px 20px; }
+          .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+          .site-title { font-size: 1.4rem; font-weight: 700; color: #18181b; margin: 0; }
+          .site-sub { font-size: 0.72rem; color: #a1a1aa; margin-top: 2px; letter-spacing: 0.05em; }
+          .header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+          .refresh-btn { background: none; border: 1px solid #e4e4e7; color: #71717a; font-size: 1rem; width: 34px; height: 34px; border-radius: 8px; cursor: pointer; }
+          .update-time { font-size: 0.7rem; color: #a1a1aa; white-space: nowrap; }
+
+          .main { flex: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 20px 16px 40px; }
+
+          .center { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 80px; text-align: center; }
+          .gray-text { color: #a1a1aa; font-size: 0.95rem; }
+
+          .grid { display: flex; flex-direction: column; gap: 14px; }
+
+          .card { background: #fff; border: 1px solid #e4e4e7; border-radius: 14px; overflow: hidden; }
+          .card-header { padding: 14px 18px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+          .persona-name { font-size: 1.2rem; font-weight: 700; color: #18181b; }
+          .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+          .badge-recv { font-size: 0.72rem; font-weight: 500; background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
+          .badge-give { font-size: 0.72rem; font-weight: 500; background: #f0fdf4; color: #22c55e; border: 1px solid #bbf7d0; border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
+
+          .cols { display: grid; grid-template-columns: 1fr 1fr; }
+          .col { padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+          .col:first-child { border-right: 1px solid #f0f0f0; }
+
+          .col-label { font-size: 0.68rem; font-weight: 600; color: #71717a; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 2px; }
+
+          .no-match { font-size: 0.8rem; color: #d4d4d8; font-style: italic; margin: 0; }
+
+          .match-block { display: flex; flex-direction: column; gap: 6px; }
+          .match-name { font-size: 0.8rem; font-weight: 600; color: #71717a; margin: 0; }
+
+          .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+          .chip-recv { font-size: 0.82rem; font-weight: 500; background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; border-radius: 7px; padding: 4px 10px; white-space: nowrap; }
+          .chip-give { font-size: 0.82rem; font-weight: 500; background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; border-radius: 7px; padding: 4px 10px; white-space: nowrap; }
+
+          .footer { padding: 16px 20px; border-top: 1px solid #e4e4e7; display: flex; justify-content: flex-end; background: #fff; }
+          .admin-link { font-size: 0.68rem; color: #d4d4d8; text-decoration: none; letter-spacing: 0.06em; }
+
+          @media (max-width: 600px) {
+            .site-title { font-size: 1.15rem; }
+            .update-time { display: none; }
+            .cols { grid-template-columns: 1fr; }
+            .col:first-child { border-right: none; border-bottom: 1px solid #f0f0f0; }
+            .card-header { padding: 12px 14px; }
+            .col { padding: 14px 14px; }
+            .persona-name { font-size: 1.1rem; }
+          }
+        `}</style>
       </Head>
 
-      <div style={s.page}>
-        <header style={s.header}>
-          <div style={s.headerInner}>
+      <div className="page">
+        <header className="header">
+          <div className="header-inner">
             <div>
-              <h1 style={s.title}>⚽ Caballeros Troca</h1>
-              <p style={s.subtitle}>Mundial 2026 · Figuritas</p>
+              <h1 className="site-title">⚽ Caballeros Troca</h1>
+              <p className="site-sub">Mundial 2026 · Figuritas</p>
             </div>
-            <div style={s.headerRight}>
-              <button onClick={fetchData} style={s.refreshBtn} title="Actualizar">↻</button>
+            <div className="header-right">
+              <button onClick={fetchData} className="refresh-btn" title="Actualizar">↻</button>
               {lastUpdate && (
-                <span style={s.updateTime}>
-                  Actualizado {lastUpdate.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
+                <span className="update-time">
+                  {lastUpdate.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
                 </span>
               )}
             </div>
           </div>
         </header>
 
-        <main style={s.main}>
+        <main className="main">
           {loading ? (
-            <div style={s.center}>
-              <span style={s.spinner}>⚽</span>
-              <span style={s.grayText}>Cargando matches...</span>
+            <div className="center">
+              <span style={{ fontSize: '2.5rem' }}>⚽</span>
+              <span className="gray-text">Cargando matches...</span>
             </div>
           ) : personas.length === 0 ? (
-            <div style={s.center}>
+            <div className="center">
               <span style={{ fontSize: '3rem' }}>⚽</span>
-              <p style={s.grayText}>No hay datos todavía.</p>
+              <p className="gray-text">No hay datos todavía.</p>
             </div>
           ) : (
-            <div style={s.grid}>
+            <div className="grid">
               {personas.map(persona => {
                 const recibo = getMatchesRecibo(persona)
                 const doy = getMatchesDoy(persona)
                 return (
-                  <div key={persona.id} style={s.card}>
-                    <div style={s.cardHeader}>
-                      <span style={s.personaName}>{persona.nombre}</span>
-                      <div style={s.badges}>
-                        <span style={s.badgeBlue}>⬇ {totalFigs(recibo)} recibe</span>
-                        <span style={s.badgeGreen}>⬆ {totalFigs(doy)} da</span>
+                  <div key={persona.id} className="card">
+                    <div className="card-header">
+                      <span className="persona-name">{persona.nombre}</span>
+                      <div className="badges">
+                        <span className="badge-recv">⬇ {totalFigs(recibo)} recibe</span>
+                        <span className="badge-give">⬆ {totalFigs(doy)} da</span>
                       </div>
                     </div>
 
-                    <div style={s.cols}>
-                      <div style={s.col}>
-                        <p style={s.colLabel}>
-                          <span style={s.colDot} />
-                          {persona.nombre.split(' ')[0]} necesita recibir
-                        </p>
+                    <div className="cols">
+                      <div className="col">
+                        <p className="col-label">⬇ {persona.nombre.split(' ')[0]} necesita</p>
                         {recibo.length === 0
-                          ? <p style={s.noMatch}>Sin matches por ahora</p>
+                          ? <p className="no-match">Sin matches por ahora</p>
                           : recibo.map(m => (
-                            <div key={m.persona.id} style={s.matchBlock}>
-                              <span style={s.matchName}>De {m.persona.nombre}</span>
-                              <div style={s.chips}>
+                            <div key={m.persona.id} className="match-block">
+                              <p className="match-name">De {m.persona.nombre}</p>
+                              <div className="chips">
                                 {m.figuritas.map(fig => (
-                                  <span key={fig.pais_codigo} style={s.chipBlue}>
+                                  <span key={fig.pais_codigo} className="chip-recv">
                                     {fig.pais_bandera} {fig.numeros.join(', ')}
                                   </span>
                                 ))}
@@ -153,21 +206,16 @@ export default function Home() {
                         }
                       </div>
 
-                      <div style={s.vDivider} />
-
-                      <div style={s.col}>
-                        <p style={s.colLabelGreen}>
-                          <span style={s.colDotGreen} />
-                          {persona.nombre.split(' ')[0]} puede dar
-                        </p>
+                      <div className="col">
+                        <p className="col-label">⬆ {persona.nombre.split(' ')[0]} puede dar</p>
                         {doy.length === 0
-                          ? <p style={s.noMatch}>Sin matches por ahora</p>
+                          ? <p className="no-match">Sin matches por ahora</p>
                           : doy.map(m => (
-                            <div key={m.persona.id} style={s.matchBlock}>
-                              <span style={s.matchName}>A {m.persona.nombre}</span>
-                              <div style={s.chips}>
+                            <div key={m.persona.id} className="match-block">
+                              <p className="match-name">A {m.persona.nombre}</p>
+                              <div className="chips">
                                 {m.figuritas.map(fig => (
-                                  <span key={fig.pais_codigo} style={s.chipGreen}>
+                                  <span key={fig.pais_codigo} className="chip-give">
                                     {fig.pais_bandera} {fig.numeros.join(', ')}
                                   </span>
                                 ))}
@@ -184,69 +232,10 @@ export default function Home() {
           )}
         </main>
 
-        <footer style={s.footer}>
-          <Link href="/admin" style={s.adminLink}>admin</Link>
+        <footer className="footer">
+          <Link href="/admin" className="admin-link">admin</Link>
         </footer>
       </div>
     </>
   )
-}
-
-const s = {
-  page: { minHeight: '100vh', background: '#18181b', display: 'flex', flexDirection: 'column', fontFamily: "'Outfit', sans-serif" },
-
-  header: { borderBottom: '1px solid #27272a', padding: '20px 32px', background: '#1c1c1f' },
-  headerInner: { maxWidth: 1140, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
-  title: { fontSize: '1.6rem', fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em', margin: 0 },
-  subtitle: { fontSize: '0.8rem', color: '#71717a', marginTop: 2, fontWeight: 400 },
-  headerRight: { display: 'flex', alignItems: 'center', gap: 12 },
-  refreshBtn: { background: 'none', border: '1px solid #3f3f46', color: '#71717a', fontSize: '1rem', width: 34, height: 34, borderRadius: 8, cursor: 'pointer', transition: 'all 0.15s' },
-  updateTime: { fontSize: '0.75rem', color: '#52525b' },
-
-  main: { flex: 1, maxWidth: 1140, margin: '0 auto', width: '100%', padding: '32px 32px' },
-  center: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, paddingTop: 100 },
-  grayText: { color: '#52525b', fontSize: '0.95rem' },
-  spinner: { fontSize: '2.5rem', display: 'block' },
-
-  grid: { display: 'flex', flexDirection: 'column', gap: 16 },
-
-  card: { background: '#1c1c1f', border: '1px solid #27272a', borderRadius: 14, overflow: 'hidden' },
-  cardHeader: { padding: '16px 24px', borderBottom: '1px solid #27272a', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#202023' },
-  personaName: { fontSize: '1.25rem', fontWeight: 700, color: '#fafafa', letterSpacing: '-0.01em' },
-  badges: { display: 'flex', gap: 8 },
-  badgeBlue: { fontSize: '0.75rem', fontWeight: 500, background: '#1e3a5f', color: '#93c5fd', border: '1px solid #1e40af', borderRadius: 20, padding: '3px 12px' },
-  badgeGreen: { fontSize: '0.75rem', fontWeight: 500, background: '#14401f', color: '#86efac', border: '1px solid #166534', borderRadius: 20, padding: '3px 12px' },
-
-  cols: { display: 'grid', gridTemplateColumns: '1fr 1px 1fr' },
-  col: { padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 16 },
-  vDivider: { background: '#27272a' },
-
-  colLabel: { fontSize: '0.72rem', fontWeight: 600, color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 7, margin: 0 },
-  colLabelGreen: { fontSize: '0.72rem', fontWeight: 600, color: '#86efac', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 7, margin: 0 },
-  colDot: { width: 6, height: 6, borderRadius: '50%', background: '#3b82f6', display: 'inline-block', flexShrink: 0 },
-  colDotGreen: { width: 6, height: 6, borderRadius: '50%', background: '#22c55e', display: 'inline-block', flexShrink: 0 },
-
-  noMatch: { fontSize: '0.82rem', color: '#3f3f46', fontStyle: 'italic', margin: 0 },
-
-  matchBlock: { display: 'flex', flexDirection: 'column', gap: 7 },
-  matchName: { fontSize: '0.82rem', fontWeight: 600, color: '#a1a1aa' },
-
-  chips: { display: 'flex', flexWrap: 'wrap', gap: 6 },
-  chipBlue: {
-    fontSize: '0.88rem', fontWeight: 500,
-    background: '#172554', color: '#bfdbfe',
-    border: '1px solid #1e3a8a',
-    borderRadius: 8, padding: '4px 12px',
-    whiteSpace: 'nowrap', letterSpacing: '0.01em',
-  },
-  chipGreen: {
-    fontSize: '0.88rem', fontWeight: 500,
-    background: '#052e16', color: '#bbf7d0',
-    border: '1px solid #14532d',
-    borderRadius: 8, padding: '4px 12px',
-    whiteSpace: 'nowrap', letterSpacing: '0.01em',
-  },
-
-  footer: { padding: '16px 32px', borderTop: '1px solid #27272a', display: 'flex', justifyContent: 'flex-end' },
-  adminLink: { fontSize: '0.7rem', color: '#3f3f46', textDecoration: 'none', letterSpacing: '0.06em' },
 }
